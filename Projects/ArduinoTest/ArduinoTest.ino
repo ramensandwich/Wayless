@@ -39,8 +39,6 @@ void setup()
 {
     Serial.begin(9600);
 
-    //TODO: Try setting to compass mode and seeing how accurate it is. All we really need is heading
-
     /* Initialise the sensor */
     if(!bno.begin())
     {
@@ -50,10 +48,8 @@ void setup()
     }
 
     delay(1000);
-
-  bno.setExtCrystalUse(true);
-
-
+  
+    bno.setExtCrystalUse(true);
 }
 
 void loop() 
@@ -61,8 +57,8 @@ void loop()
     sensors_event_t event; 
     bno.getEvent(&event);
 
-    //TODO: Verify if the orientation values are absolute (i.e. relative to magnetic north
-    //  and normal to earth's surface) or if they're relative to the starting position
+    //It seems like the X value is relative to magnetic north, but it requires some calibration
+    //  at run time.
     Serial.print("X: ");
     Serial.print(event.orientation.x, 4);
     Serial.print("\tY: ");
